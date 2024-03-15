@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mutual_fund_app/screens/home_screen.dart';
+import 'package:mutual_fund_app/screens/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.orangeAccent,
       ),
-      home: FinancialCalculatorsScreen(),
+      home: const SplashScreen(),
     );
   }
 }

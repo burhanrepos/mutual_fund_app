@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:mutual_fund_app/utils/widgets/common_widget.dart';
 
 class CalculationResultScreen extends StatefulWidget {
@@ -14,6 +15,7 @@ class _CalculationResultScreenState extends State<CalculationResultScreen> {
   late TextEditingController field1Controller;
   late TextEditingController field2Controller;
   late TextEditingController field3Controller;
+  late final ValueNotifier<bool> loading;
 
   @override
   void initState() {
@@ -23,15 +25,8 @@ class _CalculationResultScreenState extends State<CalculationResultScreen> {
     field3Controller = TextEditingController();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    double? result = (double.tryParse(field1Controller.text) ?? 0) +
-        (double.tryParse(field2Controller.text) ?? 0) +
-        (double.tryParse(field3Controller.text) ?? 0);
-
-    return Scaffold(
-      appBar: CommonWidgets.appBar(context, widget.title),
-      body: Padding(
+  calculation_result_UI(result){
+    return Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,8 +104,33 @@ class _CalculationResultScreenState extends State<CalculationResultScreen> {
             ),
           ],
         ),
-      ),
-    );
+      );
+  }
+
+  int _stackIndex = 1;
+
+  @override
+  Widget build(BuildContext context) {
+   final url = widget.title =='SIP CALCY'?'https://justasolutionaway.com/sip/':'https://justasolutionaway.com/investment-calculator';
+    
+    double? result = (double.tryParse(field1Controller.text) ?? 0) +
+        (double.tryParse(field2Controller.text) ?? 0) +
+        (double.tryParse(field3Controller.text) ?? 0);
+
+    return Scaffold(
+      appBar: CommonWidgets.appBar(context, widget.title),
+      body:Container(
+                  child: InAppWebView(
+                    key: UniqueKey(),
+        onLoadStop: (controller, url) {
+          loading.value = true;
+        },
+        initialUrlRequest: URLRequest(
+          url: WebUri(url),
+        )
+                  ),
+                ),
+              );
   }
 
   @override

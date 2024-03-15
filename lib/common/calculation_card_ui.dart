@@ -24,7 +24,8 @@ class CalculationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        switch(currentScreen){
+        final comparision = currentScreen =='Home'?currentScreen:title.split(' ')[0];
+        switch(comparision){
           case 'Home':
           Navigator.push(
           context,
@@ -33,7 +34,8 @@ class CalculationCard extends StatelessWidget {
           ),
         );
         break;
-        case 'Calculation Detail':
+        case 'SIP':
+        print("hhhhhhhhhhhhhhhh");
         Navigator.push(
           context,
           MaterialPageRoute(
